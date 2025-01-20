@@ -11,19 +11,17 @@ const heightSegments = 50;
 const geometry = new THREE.PlaneGeometry(width, height, widthSegments, heightSegments);
 
 const vertexShader = `
-  precision highp float;
+precision highp float;
   
   uniform float uTime;
-  
   varying vec2 vUv;
   varying vec3 vPos;
   varying float vWave;
 
   void main() {    
     vec3 pos = position;
-    float wave = sin(pos.x * 1.1 + uTime) * cos(pos.y * 1.2 + uTime);
+    float wave = sin(pos.x * 5.1 + uTime) * cos(pos.y * 1.5 + uTime);
     pos.z += wave;
-
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     vUv = uv;
     vPos = pos;
@@ -47,7 +45,7 @@ const fragmentShader = `
     // vec3 color2 = texture2D(tMap2, vUv).rgb;
     // vec3 color = mix(color1, color2, step(vUv.x, sin(uTime * 0.5)));
 
-    vec3 color = mix(vec3(0.0, 0.2, 1.0), vec3(1.0, 0.8, 0.0), vUv.y);
+    vec3 color = mix(vec3(6.0, 0.2, 1.0), vec3(1.0, 0.8, 0.0), vUv.y);
     gl_FragColor = vec4(color, 1.0);
   }
 `;
@@ -64,7 +62,7 @@ const material = new THREE.ShaderMaterial({
     uTime: { value: 0.0 },
   },
   side: THREE.DoubleSide,
-  wireframe: false,
+  wireframe: true,
 });
 
 const plane = new THREE.Mesh(geometry, material);
